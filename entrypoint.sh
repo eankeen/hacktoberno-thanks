@@ -8,12 +8,13 @@ doCheck() {
 		# | grep $'^\033\[3[12]m' \
 		# | sed -r 's/\x1b\[[0-9;]*m?//g')"
 
-	git diff-index --color=always -M -C -p HEAD~1
+	# diff-index doesn't work exactly with dot notation?
+	git diff --color=always -M -C -p HEAD~1..HEAD~2
 
-	# remember we do `HEAD~1..HEAD~2` because GitHub makes it's own merge commit
-	changes="$(git diff-index --color=always -M -C -p HEAD~1..HEAD~2 | grep "$(printf '^\033\[3[12]m')" | sed -r 's/\x1b\[[0-9;]*m?//g')"
+	# remember we do `HEAD~1..HEAD~2` because GitHub makes its own merge commit
+	changes="$(git diff --color=always -M -C -p HEAD~1..HEAD~2 | grep "$(printf '^\033\[3[12]m')" | sed -r 's/\x1b\[[0-9;]*m?//g')"
 
-	echo "$changes"
+	echo "CHANGES: $changes"
 
 	# basic test
 	changes="$(echo "$changes" | tr '[:upper:]' '[:lower:]')"
