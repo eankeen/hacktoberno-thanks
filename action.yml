@@ -1,4 +1,4 @@
-name: 'Hacktoberno'
+name: 'hacktoberno'
 description: 'Autonuke spammy Hacktoberfest prs'
 inputs:
    who-to-greet: # id of input

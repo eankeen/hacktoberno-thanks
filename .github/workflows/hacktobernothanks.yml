@@ -5,9 +5,9 @@ jobs:
       runs-on: ubuntu-latest
       name: hacktoberno
       steps:
-         - name: Hello world action step
+         - name: Main step
            id: hello
-           uses: actions/hello-world-docker-action@v1
+           uses: eankeen/hacktoberno-thanks@main
            with:
               who-to-greet: 'Mona the Octocat'
          # Use the output from the `hello` step
