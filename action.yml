@@ -1,10 +1,6 @@
 name: 'hacktoberno'
 description: 'Autonuke spammy Hacktoberfest prs'
 inputs:
-   who-to-greet:
-      description: 'Who to greet'
-      required: true
-      default: 'World'
    shouldCheckout:
       description: whether we should checkout the repo ourselves or use actions/checkout
       required: false
@@ -16,5 +12,4 @@ runs:
    using: 'docker'
    image: 'Dockerfile'
    args:
-      - ${{ inputs.who-to-greet }}
       - ${{ inputs.shouldCheckout }}

@@ -4,9 +4,9 @@ This action prints "Hello World" or "Hello" + the name of a person to greet to t
 
 ## Inputs
 
-### `who-to-greet`
+### `shouldCheckout`
 
-**Required** The name of the person to greet. Default `"World"`.
+**Optional** Whether we ourselves should checkout repo, or use a previous `actions/checkout` artifact. Currently has no effect
 
 ## Outputs
 

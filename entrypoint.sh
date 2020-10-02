@@ -42,5 +42,29 @@ esac
 
 perl -h
 
+
+printf "\n\n\nNEXT"
+
+
 cd "$GITHUB_WORKSPACE"
 ls -al
+
+
+# see most recent changes
+changes="$(git diff-index --color=always -M -C -p HEAD~1 \
+	| grep $'^\033\[3[12]m' \
+	| sed -r 's/\x1b\[[0-9;]*m?//g' >recent-changes)"
+
+cat "$changes"
+
+# basic test
+case "$changes" in
+	*awesome*)
+		echo "UH OH"
+		exit 1
+		;;
+	*)
+		echo "good commit"
+		exit 0
+		;;
+esac
