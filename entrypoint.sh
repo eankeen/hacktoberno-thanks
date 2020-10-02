@@ -14,14 +14,14 @@ doCheck() {
 	echo "$changes"
 
 	# basic test
-	case "$changes" in
+	case "${changes,,}" in
 		*awesome*)
 			echo "UH OH"
 			exit 1
 			;;
 		*)
 			echo "good commit"
-			exit 0
+			return 0
 			;;
 	esac
 
@@ -29,22 +29,18 @@ doCheck() {
 
 echo "$1"
 
-# informative
-# jq ".pull_request.head.label" < "$GITHUB_EVENT_PATH" \
-	# | xargs printf "DOING FOR '%s'"
-printf "merging head repo '%s' into base '%s'" "$GITHUB_HEAD_REF" "$GITHUB_BASE_REF"
+printf "merging head repo '%s' into base '%s'\n" "$GITHUB_HEAD_REF" "$GITHUB_BASE_REF"
 
 printf "AA%s\nBB%s\nCC%s\n" "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_HEAD_REF"
 
-# htmlUrl="$(jq ".pull_request.head.repo.html_url" < "$GITHUB_EVENT_PATH")"
-htmlUrl="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/tree/$GITHUB_HEAD_REF"
+htmlUrl2="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/${GITHUB_HEAD_REF}"
 
-printf "htmlUrl %s" "$htmlUrl"
+printf "HTMLURL: %s\n" "$htmlUrl2"
 
-git clone "$htmlUrl" \
+git clone "$htmlUrl2" \
 	--depth 2
-cd "${htmlUrl##*/}"
-doCheck
+cd "${htmlUrl2##*/}" \
+	&& ls -alF
 
 perl -h
 
