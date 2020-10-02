@@ -1,17 +1,23 @@
 #!/bin/bash
 
-set -euo pipefail
+# set -euo pipefail
+
+# sudo apt-get update \
+# 	&& apt-get install --no-install-recommends -y jq ca-certificates
 
 # informative
-jq ".pull_request.head.label" < "$GITHUB_EVENT_PATH" \
-	| xargs printf "DOING FOR '%s'"
+# jq ".pull_request.head.label" < "$GITHUB_EVENT_PATH" \
+	# | xargs printf "DOING FOR '%s'"
+printf "merging head repo '%s' into base '%s'" "$GITHUB_HEAD_REF" "$GITHUB_BASE_REF"
 
+# htmlUrl="$(jq ".pull_request.head.repo.html_url" < "$GITHUB_EVENT_PATH")"
+htmlUrl="$GITHUB_HEAD_REF"
 
-htmlUrl="$(jq ".pull_request.head.repo.html_url" < "$GITHUB_EVENT_PATH")"
 git clone htmlUrl \
 	--depth 2 "$htmlUrl"
 cd "${htmlUrl##*/}"
 
+ls -al
 
 # see most recent changes
 changes="$(git diff-index --color=always -M -C -p HEAD~1 \
@@ -22,14 +28,11 @@ changes="$(git diff-index --color=always -M -C -p HEAD~1 \
 case "$changes" in
 	*awesome*)
 		echo "UH OH"
-		return 1
+		exit 1
 		;;
 	*)
-		return 0
+		exit 0
 		;;
 esac
 
-perl --verison
-node --version
-python --version
-go version
+perl -h
