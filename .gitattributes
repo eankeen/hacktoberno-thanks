@@ -1,0 +1,4 @@
+* test=auto eof=lf
+
+SUPPORT.md linguist-documentation
+Justfile linguist-language=Makefile
