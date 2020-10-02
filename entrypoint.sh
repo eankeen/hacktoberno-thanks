@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# set -euo pipefail
-
-
 doCheck() {
 	ls .git
 	git log
@@ -13,7 +10,8 @@ doCheck() {
 
 	git diff-index --color=always -M -C -p HEAD~1
 
-	changes="$(git diff-index --color=always -M -C -p HEAD~1 | grep "$(printf '^\033\[3[12]m')" | sed -r 's/\x1b\[[0-9;]*m?//g')"
+	# remember we do `HEAD~1..HEAD~2` because GitHub makes it's own merge commit
+	changes="$(git diff-index --color=always -M -C -p HEAD~1..HEAD~2 | grep "$(printf '^\033\[3[12]m')" | sed -r 's/\x1b\[[0-9;]*m?//g')"
 
 	echo "$changes"
 
@@ -44,11 +42,8 @@ printf "HTMLURL: %s\n" "$htmlUrl2"
 
 git clone "$htmlUrl2" \
 	--depth 2
-cd "$(sed 's|.*/||')" \
+cd "$(echo $htmlUrl2 | sed 's|.*/||')" \
 	&& ls -alF
 
-perl -h
-
 cd "$GITHUB_WORKSPACE"
-printf "\n\n\nNEXT"
 doCheck

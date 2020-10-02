@@ -21,3 +21,17 @@ uses: eankeen/hacktoberno-thanks@main
 with:
    who-to-greet: 'Mona the Octocat'
 ```
+
+## Contributing
+
+We use the Make-like [Just](https://github.com/casey/just) as a Task runner.
+
+```sh
+# Testing
+just test-local
+just test-remote
+
+# Actually Test
+./create-branch.sh test18
+
+```
