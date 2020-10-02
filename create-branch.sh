@@ -7,7 +7,8 @@ text="Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 
 git checkout -b "$1"
 echo "${text}\nawesome thing\nupdate README.md" > test.txt
-git commit --no-edit -m "" --allow-empty --allow-empty-message
+git add test.txt
+git commit --no-edit -m "add summy file"
 gh pr create --title "$1" --body ""
 git switch main
 gh pr close ${1##test} # --delete-branch
