@@ -6,7 +6,15 @@ changes="$(git diff-index --color=always -M -C -p HEAD~1 \
 	| grep "$(printf '^\033\[3[12]m')" \
 	| sed -r 's/\x1b\[[0-9;]*m?//g' >recent-changes)"
 
-ls -al
-cat "$GITHUB_EVENT_PATH"
 
-ls -al "$HOME"
+ansi2txt --version
+
+ansifilter --version
+
+event="$(cat "$GITHUB_EVENT_PATH")"
+
+echo "$event" | jq '.pull_request.head.label'
+
+echo "$event" | jq '.pull_request.head.repo.html_url'
+
+jq --version
