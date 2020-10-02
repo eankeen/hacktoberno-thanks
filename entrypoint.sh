@@ -1,13 +1,18 @@
 #!/bin/bash
 
-set -euo pipefail
+# set -euo pipefail
+
+sudo apt-get update \
+	&& apt-get install --no-install-recommends -y jq ca-certificates
 
 # informative
-jq ".pull_request.head.label" < "$GITHUB_EVENT_PATH" \
-	| xargs printf "DOING FOR '%s'"
+# jq ".pull_request.head.label" < "$GITHUB_EVENT_PATH" \
+	# | xargs printf "DOING FOR '%s'"
+printf "mergeing head repo '%s' into base '%s" "$GITHUB_HEAD_REF" "$GITHUB_BASE_REF"
 
+# htmlUrl="$(jq ".pull_request.head.repo.html_url" < "$GITHUB_EVENT_PATH")"
+htmlUrl="$GITHUB_HEAD_REF"
 
-htmlUrl="$(jq ".pull_request.head.repo.html_url" < "$GITHUB_EVENT_PATH")"
 git clone htmlUrl \
 	--depth 2 "$htmlUrl"
 cd "${htmlUrl##*/}"
