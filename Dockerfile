@@ -1,6 +1,7 @@
 FROM ubuntu:18.10
-# FROM ubuntu:20.10
-# FROM alpine/git:latest
+
+RUN apt-get update \
+	&& apt-get install --no-install-recommends -y jq ca-certificates
 
 COPY entrypoint.sh /entrypoint.sh
 
