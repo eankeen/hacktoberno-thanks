@@ -9,12 +9,13 @@ doCheck() {
 	# see most recent changes
 	changes="$(git diff-index --color=always -M -C -p HEAD~1 \
 		| grep $'^\033\[3[12]m' \
-		| sed -r 's/\x1b\[[0-9;]*m?//g' >recent-changes)"
+		| sed -r 's/\x1b\[[0-9;]*m?//g')"
 
 	echo "$changes"
 
 	# basic test
-	case "${changes,,}" in
+	changes="$(cat "$changes" | tr '[:upper:]' '[:lower:]')"
+	case "$changes" in
 		*awesome*)
 			echo "UH OH"
 			exit 1
@@ -39,7 +40,7 @@ printf "HTMLURL: %s\n" "$htmlUrl2"
 
 git clone "$htmlUrl2" \
 	--depth 2
-cd "${htmlUrl2##*/}" \
+cd "$(sed 's|.*/||')" \
 	&& ls -alF
 
 perl -h
