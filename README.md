@@ -1,4 +1,4 @@
-# Hello world docker action
+# Hacktoberno-thanks
 
 This action prints "Hello World" or "Hello" + the name of a person to greet to the log.
 
@@ -17,7 +17,7 @@ The time we greeted you.
 ## Example usage
 
 ```yaml
-uses: actions/hello-world-docker-action@v1
+uses: eankeen/hacktoberno-thanks@main
 with:
    who-to-greet: 'Mona the Octocat'
 ```
