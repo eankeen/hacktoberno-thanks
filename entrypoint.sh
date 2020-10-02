@@ -7,14 +7,18 @@ doCheck() {
 	ls .git
 	git log
 	# see most recent changes
-	changes="$(git diff-index --color=always -M -C -p HEAD~1 \
-		| grep $'^\033\[3[12]m' \
-		| sed -r 's/\x1b\[[0-9;]*m?//g')"
+	# changes="$(git diff-index --color=always -M -C -p HEAD~1 \
+		# | grep $'^\033\[3[12]m' \
+		# | sed -r 's/\x1b\[[0-9;]*m?//g')"
+
+	git diff-index --color=always -M -C -p HEAD~1
+
+	changes="$(git diff-index --color=always -M -C -p HEAD~1 | grep "$(printf '^\033\[3[12]m')" | sed -r 's/\x1b\[[0-9;]*m?//g')"
 
 	echo "$changes"
 
 	# basic test
-	changes="$(cat "$changes" | tr '[:upper:]' '[:lower:]')"
+	changes="$(echo "$changes" | tr '[:upper:]' '[:lower:]')"
 	case "$changes" in
 		*awesome*)
 			echo "UH OH"
