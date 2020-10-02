@@ -11,7 +11,7 @@ doCheck() {
 		| grep $'^\033\[3[12]m' \
 		| sed -r 's/\x1b\[[0-9;]*m?//g' >recent-changes)"
 
-	cat "$changes"
+	echo "$changes"
 
 	# basic test
 	case "$changes" in
@@ -33,6 +33,8 @@ echo "$1"
 # jq ".pull_request.head.label" < "$GITHUB_EVENT_PATH" \
 	# | xargs printf "DOING FOR '%s'"
 printf "merging head repo '%s' into base '%s'" "$GITHUB_HEAD_REF" "$GITHUB_BASE_REF"
+
+printf "AA%s\nBB%s\nCC%s\n" "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_HEAD_REF"
 
 # htmlUrl="$(jq ".pull_request.head.repo.html_url" < "$GITHUB_EVENT_PATH")"
 htmlUrl="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/tree/$GITHUB_HEAD_REF"
